@@ -1,0 +1,67 @@
+# https://taskfile.dev/installation/
+# https://taskfile.dev/usage/
+# https://taskfile.dev/styleguide/
+version: '3'
+
+vars:
+  CONDA_PREFIX: ./venv
+  CONDA_ENV_FILE: environment.yml
+  PIP_REQ_FILE: requirements.txt
+
+env:
+  PIP_INDEX_URL: https://pypi.tuna.tsinghua.edu.cn/simple
+
+tasks:
+  default:
+    desc: build or update venv
+    cmds:
+      - task: venv:build
+    silent: true
+
+  venv:build:
+    desc: build conda venv when config file updated
+    cmds:
+      - task: venv:inner-build
+      - task: venv:config-vars
+      - task: venv:usage
+    silent: true
+
+  venv:usage:
+    desc: help message of venv
+    cmds:
+      - conda env list --json
+      - echo "environment variables:"
+      - conda env config vars list -p {{.CONDA_PREFIX}}
+      - echo "continue to use commands below:"
+      - echo "conda activate {{.CONDA_PREFIX}} (activate conda environment)"
+      - echo "conda deactivate (deactivate conda environment)"
+      - echo "task --list (show all tasks)"
+    silent: true
+
+  venv:inner-build:
+    internal: true
+    silent: true
+    cmds:
+      - test ! -d {{.CONDA_PREFIX}} || conda env update -f {{.CONDA_ENV_FILE}} -p {{.CONDA_PREFIX}}
+      - test -d {{.CONDA_PREFIX}} || conda env create -f {{.CONDA_ENV_FILE}} -p {{.CONDA_PREFIX}}
+      - touch {{.CONDA_PREFIX}}
+    status:
+      - test {{.CONDA_PREFIX}} -nt {{.CONDA_ENV_FILE}}
+      - test {{.CONDA_PREFIX}} -nt {{.PIP_REQ_FILE}}
+
+  venv:config-vars:
+    internal: true
+    cmds:
+      - conda env config vars set PYTHONPATH={{.PYTHONPATH}} -p {{.CONDA_PREFIX}}
+    vars:
+      PYTHONPATH:
+        sh: pwd
+
+  venv:clean:
+    desc: remove conda venv
+    silent: true
+    cmds:
+      - conda env remove -p {{.CONDA_PREFIX}}
+      - rm -rf {{.CONDA_PREFIX}}
+      - echo "conda env list after remove venv"
+      - conda env list --json

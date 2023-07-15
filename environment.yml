@@ -1,0 +1,10 @@
+name: python-hexagonal-arch
+channels:
+  - defaults
+dependencies:
+  - python=3.9
+  - pip
+  # https://github.com/conda/conda/blob/main/tests/conda_env/support/advanced-pip/environment.yml
+  - pip:
+      - --index-url https://pypi.tuna.tsinghua.edu.cn/simple
+      - -r requirements.txt
