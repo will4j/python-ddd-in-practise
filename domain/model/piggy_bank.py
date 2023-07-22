@@ -1,9 +1,9 @@
 class PiggyBank:
     def __init__(self, balance):
-        self.balance = balance
+        self.__balance = balance
 
     def check_balance(self):
-        pass
+        return self.__balance
 
     def deposit(self, amount):
-        pass
+        self.__balance += amount

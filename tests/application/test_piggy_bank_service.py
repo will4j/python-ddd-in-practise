@@ -1,5 +1,5 @@
 from application.piggy_bank_service import PiggyBankServie
-from infrastructure.adapters.memory.memory_piggy_bank_persistence import MemoryPiggyBankPersistence
+from infrastructure.adapters.mock.memory_piggy_bank_persistence import MemoryPiggyBankPersistence
 
 
 def mock_piggy_bank_service(balance) -> PiggyBankServie:

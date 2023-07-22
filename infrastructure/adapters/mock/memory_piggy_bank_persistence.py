@@ -7,7 +7,7 @@ class MemoryPiggyBankPersistence(PiggyBankPersistence):
         self.balance = balance
 
     def get(self) -> PiggyBank:
-        pass
+        return PiggyBank(self.balance)
 
     def save(self, piggy_bank: PiggyBank):
-        pass
+        self.balance = piggy_bank.check_balance()
