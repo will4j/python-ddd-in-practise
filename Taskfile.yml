@@ -8,9 +8,6 @@ vars:
   CONDA_ENV_FILE: environment.yml
   PIP_REQ_FILE: requirements.txt
 
-env:
-  PIP_INDEX_URL: https://pypi.tuna.tsinghua.edu.cn/simple
-
 tasks:
   default:
     desc: build or update venv
@@ -35,6 +32,7 @@ tasks:
       - echo "continue to use commands below:"
       - echo "conda activate {{.CONDA_PREFIX}} (activate conda environment)"
       - echo "conda deactivate (deactivate conda environment)"
+      - echo "task --force (force rebuild venv)"
       - echo "task --list (show all tasks)"
     silent: true
 
