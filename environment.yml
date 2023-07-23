@@ -1,8 +1,8 @@
-name: python-hexagonal-arch
+name: python-ddd-in-practise
 channels:
   - defaults
 dependencies:
-  - python=3.9
+  - python=3.10
   - pip
   # https://github.com/conda/conda/blob/main/tests/conda_env/support/advanced-pip/environment.yml
   - pip:

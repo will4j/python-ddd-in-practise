@@ -1,2 +1,6 @@
 pytest
+pytest-cov
 behave
+dependency-injector[yaml]
+fastapi
+hypercorn
