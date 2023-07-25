@@ -4,3 +4,4 @@ behave
 dependency-injector[yaml]
 fastapi
 hypercorn
+httpx

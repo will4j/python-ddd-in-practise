@@ -8,11 +8,11 @@ class PiggyBankServie(CheckPiggyBankUseCase, SavePiggyBankUseCase):
     def __init__(self, piggy_bank_repository: PiggyBankRepository):
         self.piggy_bank_repository = piggy_bank_repository
 
-    def balance(self):
+    def balance(self) -> float:
         piggy_bank = self.piggy_bank_repository.get()
         return piggy_bank.check_balance()
 
-    def deposit(self, amount):
+    def deposit(self, amount: float) -> None:
         piggy_bank = self.piggy_bank_repository.get()
         piggy_bank.deposit(amount)
         self.piggy_bank_repository.save(piggy_bank)
