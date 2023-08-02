@@ -1,19 +1,23 @@
-from application.piggy_bank_service import PiggyBankServie
+import pytest
+
 from infrastructure.adapters.memory.memory_piggy_bank_persistence import MemoryPiggyBankPersistence
+from infrastructure.factory.di.piggy_bank_container import PiggyBankContainer
 
 
-def mock_piggy_bank_service(balance) -> PiggyBankServie:
-    piggy_bank_repository = MemoryPiggyBankPersistence(balance)
-    piggy_bank_service = PiggyBankServie(piggy_bank_repository)
-    return piggy_bank_service
+@pytest.fixture()
+def container() -> PiggyBankContainer:
+    container = PiggyBankContainer()
+    container.piggy_bank_repository.override(MemoryPiggyBankPersistence(10.0))
+    yield container
+    container.piggy_bank_service.reset()
 
 
-def test_check_balance():
-    piggy_bank_service = mock_piggy_bank_service(10.0)
+def test_check_balance(container):
+    piggy_bank_service = container.piggy_bank_service()
     assert piggy_bank_service.balance() == 10.0
 
 
-def test_deposit():
-    piggy_bank_service = mock_piggy_bank_service(10.0)
+def test_deposit(container):
+    piggy_bank_service = container.piggy_bank_service()
     piggy_bank_service.deposit(1.5)
     assert piggy_bank_service.balance() == 11.5
