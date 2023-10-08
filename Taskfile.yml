@@ -63,3 +63,7 @@ tasks:
       - rm -rf {{.CONDA_PREFIX}}
       - echo "conda env list after remove venv"
       - conda env list --json
+
+  server:run:
+    desc: start server app
+    cmd: python scripts/main.py

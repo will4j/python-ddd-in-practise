@@ -8,16 +8,19 @@ from infrastructure.adapters.rest.endpoints import piggy_bank_endpoints
 from infrastructure.factory.di.piggy_bank_container import PiggyBankContainer
 
 
-def create_app() -> FastAPI:
-    container = PiggyBankContainer()
-
+def create_app(container=PiggyBankContainer()) -> FastAPI:
     app = FastAPI()
     app.container = container
     app.include_router(piggy_bank_endpoints.router)
     return app
 
 
-app = create_app()
+def run(app=create_app(), bind="127.0.0.1:8000"):
+    app_config = Config()
+    app_config.bind = bind
+
+    asyncio.run(serve(app, app_config))  # type: ignore
+
 
 if __name__ == '__main__':
-    asyncio.run(serve(app, Config()))
+    run()

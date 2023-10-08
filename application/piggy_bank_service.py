@@ -1,6 +1,6 @@
 from application.ports.input.piggy_bank_use_case import CheckPiggyBankUseCase
 from application.ports.input.piggy_bank_use_case import SavePiggyBankUseCase
-from domain.repository.piggy_bank_repository import PiggyBankRepository
+from domain.piggy_bank.repository import PiggyBankRepository
 
 
 class PiggyBankServie(CheckPiggyBankUseCase, SavePiggyBankUseCase):
